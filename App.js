@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, View} from 'react-native';
+import Jogadores from './src/Jogadores';
+import JogoVelha from './src/JogoVelha';
 import Home from './src/home';
-import Jogo from './src/jogo';
 
 export default function App() {
-  const [screen, setScreen] = useState("home");
+  const [screen, setScreen] = useState("Jogadores");
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
 
@@ -21,13 +22,13 @@ export default function App() {
   return (
     <View style={styles.container}> 
       <StatusBar style="auto" />
-      {checkScreen("home") && (
-      <Home 
+      {checkScreen("Jogadores") && (
+      <Jogadores 
         mudarNomeJogadores={setJogadores}
         changeScreen={changeScreen}
       />
-    )}
-    {checkScreen("jogo") && <Jogo  changeScreen={changeScreen} />}
+      )}
+    {checkScreen("JogoVelha") && <JogoVelha  changeScreen={changeScreen} />}
     </View>
   );
 }

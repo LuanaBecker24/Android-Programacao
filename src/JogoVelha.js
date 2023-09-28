@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 
-export default function Jogo(props) {
+export default function JogoVelha(props) {
     const [b1, setB1] = useState("")
     const [b2, setB2] = useState("")
     const [b3, setB3] = useState("")
@@ -66,14 +66,14 @@ export default function Jogo(props) {
         } else {setB9("X")}
     }
 
-    const handleClick = (event) => {
-        props.changeScreen("home")
+    const handleClick = () => {
+        props.changeScreen("Jogadores")
     }
 
     return (
         <View style={styles.container}>
             <Button title="Voltar" onPress={handleClick}/>
-            <Text style={styles.text}>Jogo</Text>
+            <Text style={styles.text}>Jogo da Velha</Text>
             <Button title={b1} onPress={handleClickB1}/>
             <Button title={b2} onPress={handleClickB2}/>
             <Button title={b3} onPress={handleClickB3}/>
