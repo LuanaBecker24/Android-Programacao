@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function JogoVelha(props) {
     const [b1, setB1] = useState("")
@@ -12,7 +12,11 @@ export default function JogoVelha(props) {
     const [b8, setB8] = useState("")
     const [b9, setB9] = useState("")
 
-    const handleClickB1 = (b, setb) => {
+    const handleClick = () => {
+        props.changeScreen("Jogadores")
+    }
+    
+    const handleClickB1 = () => {
         if(b1 === "X") {
             setB1("O");
         } else {setB1("X")}
@@ -66,23 +70,28 @@ export default function JogoVelha(props) {
         } else {setB9("X")}
     }
 
-    const handleClick = () => {
-        props.changeScreen("Jogadores")
-    }
-
     return (
         <View style={styles.container}>
             <Button title="Voltar" onPress={handleClick}/>
             <Text style={styles.text}>Jogo da Velha</Text>
-            <Button title={b1} onPress={handleClickB1}/>
-            <Button title={b2} onPress={handleClickB2}/>
-            <Button title={b3} onPress={handleClickB3}/>
-            <Button title={b4} onPress={handleClickB4}/>
-            <Button title={b5} onPress={handleClickB5}/>
-            <Button title={b6} onPress={handleClickB6}/>
-            <Button title={b7} onPress={handleClickB7}/>
-            <Button title={b8} onPress={handleClickB8}/>
-            <Button title={b9} onPress={handleClickB9}/>
+
+            <View style={styles.botoes}>            
+                <Button title={b1} onPress={handleClickB1}/>
+                <Button title={b2} onPress={handleClickB2}/>
+                <Button title={b3} onPress={handleClickB3}/>
+            </View>
+
+            <View style={styles.botoes}>  
+                <Button title={b4} onPress={handleClickB4}/>
+                <Button title={b5} onPress={handleClickB5}/>
+                <Button title={b6} onPress={handleClickB6}/>
+            </View>
+
+            <View style={styles.botoes}>  
+                <Button title={b7} onPress={handleClickB7}/>
+                <Button title={b8} onPress={handleClickB8}/>
+                <Button title={b9} onPress={handleClickB9}/>
+            </View>
         </View>
     )
 }
@@ -96,6 +105,10 @@ const styles = StyleSheet.create({
       gap: 15
     },
     text: {
-      fontSize: 30,
+      fontSize: 30
+    },
+    botoes: {
+        flexDirection: "row",
+        gap: 5
     }
 })

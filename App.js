@@ -1,14 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, View} from 'react-native';
-import Jogadores from './src/Jogadores';
-import JogoVelha from './src/JogoVelha';
+import { StyleSheet, View } from 'react-native';
+
 import Home from './src/home';
+import Jogadores from './src/jogoDaVelha/Jogadores';
+import JogoVelha from './src/jogoDaVelha/JogoVelha';
+import Palavra from './src/jogoForca/Palavra';
 
 export default function App() {
-  const [screen, setScreen] = useState("Jogadores");
+  const [screen, setScreen] = useState("Home");
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
+  const [palavra, setPalavra] = useState("");
 
   const checkScreen = (checkScreen) => checkScreen === screen;
 
@@ -20,15 +23,36 @@ export default function App() {
   const changeScreen = (newScreen) => setScreen(newScreen);
 
   return (
-    <View style={styles.container}> 
+    <View style={styles.container}>
       <StatusBar style="auto" />
-      {checkScreen("Jogadores") && (
-      <Jogadores 
-        mudarNomeJogadores={setJogadores}
-        changeScreen={changeScreen}
-      />
+      {checkScreen("Home") && (
+        <Home changeScreen={changeScreen} />
       )}
-    {checkScreen("JogoVelha") && <JogoVelha  changeScreen={changeScreen} />}
+      {checkScreen("Jogadores") && (
+        <Jogadores 
+          mudarNomeJogadores={setJogadores}
+          changeScreen={changeScreen}
+        />
+      )}
+      {checkScreen("JogoVelha") && (
+        <JogoVelha 
+          player1={player1}
+          player2={player2}
+          changeScreen={changeScreen}
+        />
+      )}
+      {checkScreen("Palavra") && (
+        <Palavra 
+          nomePalavra={setPalavra}
+          changeScreen={changeScreen}
+        />
+      )}
+      {checkScreen("Forca") && (
+        <Forca
+          palavra={palavra}
+          changeScreen={changeScreen}
+        />
+      )}
     </View>
   );
 }

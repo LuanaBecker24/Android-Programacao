@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function Jogadores ({
   mudarNomeJogadores,
@@ -18,6 +18,7 @@ export default function Jogadores ({
 
   return (
     <View style={styles.container}> 
+      <Button title="Voltar" onPress={() => changeScreen("Home")} />
       <Text style={styles.text}>1° Jogador: {player1}</Text>
       <TextInput placeholder="Player1" style={styles.input} value={player1} onChangeText={setPlayer1}/>
 
