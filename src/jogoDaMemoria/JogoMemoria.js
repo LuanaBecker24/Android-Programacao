@@ -23,17 +23,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    gap: 15,
+    gap: 15
   },
   text: {
     fontSize: 25,
     fontWeight: "bold"
-  },
-  buttonContainer: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 12,
-    gap: 20,
   }
 })

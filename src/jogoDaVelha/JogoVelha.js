@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    gap: 15,
+    gap: 15
   },
   text: {
     fontSize: 25,
@@ -136,9 +136,5 @@ const styles = StyleSheet.create({
     height: 35,
     justifyContent: "center",
     alignItems: "center",
-  },
-  buttonVoltarContainer: {
-    margin: 12,
-    gap: 20
-  },
+  }
 });
