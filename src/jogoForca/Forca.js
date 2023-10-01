@@ -1,9 +1,6 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 
-export default function Forca ({
-  nomePalavra,
-  changeScreen
-}) {
+export default function Forca(props) {
 
   const handleClick = () => {
     props.changeScreen("Palavra")
@@ -11,18 +8,23 @@ export default function Forca ({
 
   return (
     <View style={styles.container}>
-        <Button title="Voltar" onPress={handleClick}/>
-        <Text style={styles.text}>Jogo da Velha</Text>
+      <Button title="Voltar" color="#8b8c89" onPress={handleClick} />
+      <Text style={styles.text}>Forca</Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-container: {
-  flex: 1,
-  backgroundColor: '#98c1d9',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 15
-}
+  container: {
+    flex: 1,
+    backgroundColor: "#FEF9EF",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    gap: 15,
+  },
+  text: {
+    fontSize: 25,
+    fontWeight: "bold"
+  },
 })

@@ -4,9 +4,15 @@ export default function Home({ changeScreen }) {
   return (
     <View style={styles.container}> 
       <Text style={styles.text}>Meu App de Jogos!</Text>
-      <Button title="Jogo da Velha" onPress={() => changeScreen("Jogadores")} />
-      <Button title="Jogo da memória" />
-      <Button title="Forca" onPress={() => changeScreen("Palavra")} />
+      <View style={styles.buttonContainer}>
+        <Button title="Jogo da Velha" color="#e09f3e" onPress={() => changeScreen("JogadoresVelha")} />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Jogo da Memória" color="#e09f3e" onPress={() => changeScreen("JogadoresMemoria")} />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Forca" color="#e09f3e" onPress={() => changeScreen("Palavra")} />
+      </View>
     </View>
   );
 }
@@ -14,21 +20,27 @@ export default function Home({ changeScreen }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#98c1d9",
+    backgroundColor: "#FEF9EF",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
     gap: 15,
   },
   input: {
-    width: "70%",
-    height: 30,
+    width: "50%",
+    height: 32,
     borderStyle: "solid",
     borderColor: "black",
     borderRadius: 3,
     borderWidth: 2,
   },
   text: {
-    fontSize: 20,
+    fontSize: 30,
+    marginBottom: 15,
+    fontWeight: "bold"
   },
+  buttonContainer: {
+    width: 300,
+    height: 35
+  }
 });

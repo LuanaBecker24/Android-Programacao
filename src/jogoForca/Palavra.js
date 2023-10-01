@@ -16,12 +16,13 @@ export default function Palavra ({
   }
 
   return (
-    <View style={styles.container}> 
-      <Button title="Voltar" onPress={() => changeScreen("Home")} />
+    <View style={styles.container}>
       <Text style={styles.text}>Escolha a palavra: {palavra}</Text>
       <TextInput placeholder="Palavra" style={styles.input} value={palavra} onChangeText={setPalavra}/>
-
-      <Button title="Jogar" onPress={handleClick}/>
+      <View style={styles.buttonContainer}>
+        <Button title="Jogar" color="#e09f3e" onPress={handleClick} />
+        <Button style={styles.buttonContainer} title="Voltar" color="#8b8c89" onPress={() => changeScreen("Home")} />
+      </View>
     </View>
   );
 }
@@ -29,21 +30,29 @@ export default function Palavra ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#98c1d9',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    gap: 15
+    backgroundColor: "#FEF9EF",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    gap: 10,
+    marginTop: 15
   },
   input: {
-    width: "70%",
-    height: 30,
+    width: "50%",
+    height: 32,
     borderStyle: "solid",
     borderColor: "black",
     borderRadius: 3,
-    borderWidth: 2
+    borderWidth: 2,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18
+  },
+  buttonContainer: {
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 12,
+    gap: 20,
   }
 });
