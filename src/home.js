@@ -26,14 +26,6 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 15,
   },
-  input: {
-    width: "50%",
-    height: 32,
-    borderStyle: "solid",
-    borderColor: "black",
-    borderRadius: 3,
-    borderWidth: 2,
-  },
   text: {
     fontSize: 30,
     marginBottom: 15,
