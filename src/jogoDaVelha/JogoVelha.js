@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function JogoVelha(props) {
+  const [jogadorAtual, setJogadorAtual] = useState("X");
+  const [ganhador, setGanhador] = useState("");
+  const { jogador1, jogador2 } = props;
+  const [nomeJogador, setNomeJogador] = useState(jogador1);
   const [b1, setB1] = useState("");
   const [b2, setB2] = useState("");
   const [b3, setB3] = useState("");
@@ -16,77 +20,106 @@ export default function JogoVelha(props) {
     props.changeScreen("JogadoresVelha");
   };
 
+  const checkGanhador = () => {
+    const vencedor = [
+      [b1, b2, b3],
+      [b4, b5, b6],
+      [b7, b8, b9],
+      [b1, b4, b7],
+      [b2, b5, b8],
+      [b3, b6, b9],
+      [b1, b5, b9],
+      [b3, b5, b7],
+    ];
+
+    for (const condicao of vencedor) {
+      const [a, b, c] = condicao;
+      if (a && a === b && a === c) {
+        setGanhador(a === jogador1 ? jogador1 : jogador2);
+        return
+      }
+    }
+    if (b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 && b9 && !ganhador) {
+      setGanhador("Empate");
+    }
+  };
+
   const handleClickB1 = () => {
-    if (b1 === "X") {
-      setB1("O");
-    } else {
-      setB1("X");
+    if (b1 === "" && !ganhador) {
+      setB1(jogadorAtual);
+      console.log("Clicado em B1");
+      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+      setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
 
   const handleClickB2 = () => {
-    if (b2 === "X") {
-      setB2("O");
-    } else {
-      setB2("X");
+    if (b2 === "" && !ganhador) {
+      console.log("Clicado em B1");
+      setB2(jogadorAtual);
+      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+      setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
 
   const handleClickB3 = () => {
-    if (b3 === "X") {
-      setB3("O");
-    } else {
-      setB3("X");
+    if (b3 === "" && !ganhador) {
+      setB3(jogadorAtual);
+      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+      setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
 
   const handleClickB4 = () => {
-    if (b4 === "X") {
-      setB4("O");
-    } else {
-      setB4("X");
+    if (b4 === "" && !ganhador) {
+      setB4(jogadorAtual);
+      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+      setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
 
   const handleClickB5 = () => {
-    if (b5 === "X") {
-      setB5("O");
-    } else {
-      setB5("X");
+    if (b5 === "" && !ganhador) {
+      setB5(jogadorAtual);
+      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+      setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
 
   const handleClickB6 = () => {
-    if (b6 === "X") {
-      setB6("O");
-    } else {
-      setB6("X");
+    if (b6 === "" && !ganhador) {
+      setB6(jogadorAtual);
+      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+      setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
-
   const handleClickB7 = () => {
-    if (b7 === "X") {
-      setB7("O");
-    } else {
-      setB7("X");
+    if (b7 === "" && !ganhador) {
+      setB7(jogadorAtual);
+      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+      setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
 
   const handleClickB8 = () => {
-    if (b8 === "X") {
-      setB8("O");
-    } else {
-      setB8("X");
+    if (b8 === "" && !ganhador) {
+      setB8(jogadorAtual);
+      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+      setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
+    }
+  };
+  const handleClickB9 = () => {
+    if (b9 === "" && !ganhador) {
+      setB9(jogadorAtual);
+      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+      setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
 
-  const handleClickB9 = () => {
-    if (b9 === "X") {
-      setB9("O");
-    } else {
-      setB9("X");
-    }
-  };
+  useEffect(() => {
+    checkGanhador();
+    setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
+  }, [b1, b2, b3, b4, b5, b6, b7, b8, b9, jogadorAtual]);
 
   return (
     <View style={styles.container}>
@@ -112,6 +145,16 @@ export default function JogoVelha(props) {
         <Button title={b8} color="#e09f3e" onPress={handleClickB8} />
         <Button title={b9} color="#e09f3e" onPress={handleClickB9} />
       </View>
+
+      {ganhador ? (
+        ganhador === "Empate" ? (
+          <Text style={styles.textJogadas}>Empate!</Text>
+        ) : (
+          <Text style={styles.textJogadas}>Vencedor: {nomeJogador}</Text>
+        )
+      ) : (
+        <Text style={styles.textJogadas}>Vez de: {nomeJogador}</Text>
+      )}
     </View>
   );
 }
@@ -127,14 +170,16 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 25,
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   botoes: {
     flexDirection: "row",
     gap: 5,
-    width: 115,
-    height: 35,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
+  },
+  textJogadas: {
+    fontSize: 18,
+    marginTop: 10
   }
 });
