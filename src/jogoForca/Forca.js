@@ -30,6 +30,10 @@ export default function Forca(props) {
     setLetraAdivinhada("");
   }
 
+  const letrasIncorretas = letrasAdivinhadas.filter(
+    (letra) => !palavra.includes(letra)
+  );
+
   useEffect(() => {
     const todasLetrasAdivinhadas = palavra.split('').every(letra => letrasAdivinhadas.includes(letra));
     if (todasLetrasAdivinhadas) {
@@ -63,6 +67,18 @@ export default function Forca(props) {
         />
         <Button title="Adivinhar" color="#e09f3e" onPress={handleAdivinhar} />
       </View>
+
+      <Text style={styles.tentativasLetras}>Tentativas de letras: </Text>
+
+      {letrasIncorretas.length > 0 && (
+        <View style={styles.letrasIncorretas}>
+          {letrasIncorretas.map((letra, index) => (
+            <Text key={index} style={styles.tentativas}>
+              {letra}
+            </Text>
+          ))}
+        </View>
+      )}
 
       {palavraCompleta && (
         <Text style={styles.ganhou}>🎉 Parabéns! 🎉</Text>
@@ -130,4 +146,16 @@ const styles = StyleSheet.create({
   letra: {
     fontSize: 18
   },
+  letrasIncorretas: {
+    flexDirection: "row", 
+    justifyContent: "center"
+  },
+  tentativas: {
+    marginRight: 5,
+    fontSize: 18
+  },
+  tentativasLetras: {
+    fontSize: 18,
+    marginTop: 18
+  }
 })
