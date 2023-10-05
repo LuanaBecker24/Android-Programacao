@@ -5,7 +5,6 @@ export default function JogoVelha(props) {
   const [jogadorAtual, setJogadorAtual] = useState("X");
   const [ganhador, setGanhador] = useState("");
   const { jogador1, jogador2 } = props;
-  const [nomeJogador, setNomeJogador] = useState(jogador1);
   const [b1, setB1] = useState("");
   const [b2, setB2] = useState("");
   const [b3, setB3] = useState("");
@@ -35,7 +34,7 @@ export default function JogoVelha(props) {
     for (const condicao of vencedor) {
       const [a, b, c] = condicao;
       if (a && a === b && a === c) {
-        setGanhador(a === jogador1 ? jogador1 : jogador2);
+        setGanhador(a);
         return
       }
     }
@@ -47,17 +46,13 @@ export default function JogoVelha(props) {
   const handleClickB1 = () => {
     if (b1 === "" && !ganhador) {
       setB1(jogadorAtual);
-      console.log("Clicado em B1");
-      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
 
   const handleClickB2 = () => {
     if (b2 === "" && !ganhador) {
-      console.log("Clicado em B1");
       setB2(jogadorAtual);
-      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
@@ -65,7 +60,6 @@ export default function JogoVelha(props) {
   const handleClickB3 = () => {
     if (b3 === "" && !ganhador) {
       setB3(jogadorAtual);
-      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
@@ -73,7 +67,6 @@ export default function JogoVelha(props) {
   const handleClickB4 = () => {
     if (b4 === "" && !ganhador) {
       setB4(jogadorAtual);
-      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
@@ -81,7 +74,6 @@ export default function JogoVelha(props) {
   const handleClickB5 = () => {
     if (b5 === "" && !ganhador) {
       setB5(jogadorAtual);
-      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
@@ -89,14 +81,12 @@ export default function JogoVelha(props) {
   const handleClickB6 = () => {
     if (b6 === "" && !ganhador) {
       setB6(jogadorAtual);
-      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
   const handleClickB7 = () => {
     if (b7 === "" && !ganhador) {
       setB7(jogadorAtual);
-      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
@@ -104,21 +94,18 @@ export default function JogoVelha(props) {
   const handleClickB8 = () => {
     if (b8 === "" && !ganhador) {
       setB8(jogadorAtual);
-      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
   const handleClickB9 = () => {
     if (b9 === "" && !ganhador) {
       setB9(jogadorAtual);
-      setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
 
   useEffect(() => {
     checkGanhador();
-    setNomeJogador(jogadorAtual === jogador1 ? jogador2 : jogador1);
   }, [b1, b2, b3, b4, b5, b6, b7, b8, b9, jogadorAtual]);
 
   return (
@@ -148,12 +135,12 @@ export default function JogoVelha(props) {
 
       {ganhador ? (
         ganhador === "Empate" ? (
-          <Text style={styles.textJogadas}>Empate!</Text>
+          <Text style={styles.textResultado}>Empate!</Text>
         ) : (
-          <Text style={styles.textJogadas}>Vencedor: {nomeJogador}</Text>
+          <Text style={styles.textResultado}>Ganhador: {ganhador === "X" ? jogador1 : jogador2}</Text>
         )
       ) : (
-        <Text style={styles.textJogadas}>Vez de: {nomeJogador}</Text>
+        <Text style={styles.textResultado}>Jogador Atual: {jogadorAtual === "X" ? jogador1 : jogador2}</Text>
       )}
     </View>
   );

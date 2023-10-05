@@ -17,7 +17,7 @@ export default function Palavra ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Escolha a palavra: {palavra}</Text>
+      <Text style={styles.text}>Palavra escolhida: {palavra}</Text>
       <TextInput placeholder="Palavra" style={styles.input} value={palavra} onChangeText={setPalavra}/>
       <View style={styles.buttonContainer}>
         <Button title="Jogar" color="#e09f3e" onPress={handleClick} />

@@ -11,7 +11,7 @@ export default function JogoMemoria(props) {
       <View style={styles.buttonContainer}>
         <Button title="Voltar" color="#8b8c89" onPress={handleClick} />
       </View>
-      <Text style={styles.text}>Jogo da Memória</Text>
+      <Text style={styles.text}>Jogo da Memória </Text>
     </View>
   )
 }
