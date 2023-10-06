@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function JogoVelha(props) {
+  //guarda o valor "X" ou "O" para indicar qual jogador está jogando. 
   const [jogadorAtual, setJogadorAtual] = useState("X");
+  // é usado para armazenar o resultado do jogo.
   const [ganhador, setGanhador] = useState("");
   const { jogador1, jogador2 } = props;
+  //todas representam o que vai estar dentro delas, por enquanto estão sem nada, 
+  //mas dps vão ter valor("X ou O").
   const [b1, setB1] = useState("");
   const [b2, setB2] = useState("");
   const [b3, setB3] = useState("");
@@ -15,10 +19,12 @@ export default function JogoVelha(props) {
   const [b8, setB8] = useState("");
   const [b9, setB9] = useState("");
 
+  //para o botão de voltar
   const handleClick = () => {
     props.changeScreen("JogadoresVelha");
   };
 
+  //os jeitos para ganhar, aqui ele verifica de acordo com a lógica se o jogador ganhou ou não
   const checkGanhador = () => {
     const vencedor = [
       [b1, b2, b3],
@@ -31,21 +37,30 @@ export default function JogoVelha(props) {
       [b3, b5, b7],
     ];
 
+    //aqui inicia um loop "for...of" 
     for (const condicao of vencedor) {
+      //aqui as três casas a, b e c são estruturadas em três elementos, que seria tipo a condição
+      //para ganhar, se for verdadeiro retorna como jogador e a jogada acaba.
       const [a, b, c] = condicao;
       if (a && a === b && a === c) {
+        //aqui ele pega o a, porque vai pegar o conteúdo que está dentro de "a" que vai ser o ganhador.
         setGanhador(a);
         return
       }
     }
+    //se não é considerado empate
     if (b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 && b9 && !ganhador) {
       setGanhador("Empate");
     }
   };
 
+  //aqui ele faz a verificação se o botão clicado, já havia sido clicado ou se já houve um ganhador
+  //se não, ele coloca X ou O para o jogador atual, onde vai ocorrer essa alternação para a próxima jogada.
   const handleClickB1 = () => {
     if (b1 === "" && !ganhador) {
       setB1(jogadorAtual);
+      //Se jogadorAtual for "X", ela define jogadorAtual como "O".
+      //Se jogadorAtual for "O", ela define jogadorAtual como "X".
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
@@ -103,7 +118,8 @@ export default function JogoVelha(props) {
       setJogadorAtual(jogadorAtual === "X" ? "O" : "X");
     }
   };
-
+  //aqui toda vez que uma dessas "variáveis" forem chamadas ele vai "ativar" e verificar se o jogo 
+  // já possui um ganhador e prescisa ser parado o jogo.
   useEffect(() => {
     checkGanhador();
   }, [b1, b2, b3, b4, b5, b6, b7, b8, b9, jogadorAtual]);
@@ -134,12 +150,15 @@ export default function JogoVelha(props) {
       </View>
 
       {ganhador ? (
+        //aqui ele verifica se há um ganhador, se sim ele verifica se foi empate e mostra o texto referente.
         ganhador === "Empate" ? (
           <Text style={styles.textResultado}>Empate!</Text>
         ) : (
+          //se não foi empate ele mostra o texto e o nome do ganhador.
           <Text style={styles.textResultado}>Ganhador: {ganhador === "X" ? jogador1 : jogador2}</Text>
         )
       ) : (
+        //agora se não tivesse um ganhador, ele viria para cá e mostraria qual é o jogador atual.
         <Text style={styles.textResultado}>Jogador Atual: {jogadorAtual === "X" ? jogador1 : jogador2}</Text>
       )}
     </View>
@@ -168,5 +187,9 @@ const styles = StyleSheet.create({
   textJogadas: {
     fontSize: 18,
     marginTop: 10
+  },
+  textResultado: {
+    fontSize: 18,
+    marginBottom: 10
   }
 });

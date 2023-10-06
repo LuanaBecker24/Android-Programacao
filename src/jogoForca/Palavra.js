@@ -9,7 +9,10 @@ export default function Palavra ({
   const [palavra, setPalavra] = useState("");
 
   const handleClick = () =>{
-    if(nomePalavra) {
+    if (!palavra || !/^[a-zA-Z]+$/.test(palavra)) {
+      return <Text style={styles.errorMessage}>Palavra inválida</Text>;
+    }
+    if(nomePalavra ) {
         nomePalavra(palavra)
         changeScreen("Forca")
     }
