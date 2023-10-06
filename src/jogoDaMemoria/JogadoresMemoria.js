@@ -1,42 +1,53 @@
 import { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
-export default function JogadoresMemoria ({
+export default function JogadoresMemoria({
   jogadoresMemoria,
   changeScreen
 }) {
   const [jogador1, setJogador1] = useState("");
   const [jogador2, setJogador2] = useState("");
+  const [error, setError] = useState("");
 
   const handleClick = () => {
-    if (jogadoresMemoria) {
-      jogadoresMemoria(jogador1, jogador2);
-      changeScreen("JogoMemoria");
-    } 
+    if (jogadoresMemoria && jogador1.trim() !== "" && jogador2.trim() !== "") {
+      if (jogador1 !== jogador2) {
+        setError(""); 
+        jogadoresMemoria(jogador1, jogador2);
+        changeScreen("JogoMemoria");
+      } else {
+        setError("Os nomes dos jogadores devem ser diferentes.");
+      }
+    } else {
+      setError("Por favor, preencha ambos os nomes dos jogadores.");
+    }
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>1° Jogador: {jogador1}</Text>
-      <TextInput
-        placeholder="Nome"
-        style={styles.input}
-        value={jogador1}
-        onChangeText={setJogador1}
-      />
-      <Text style={styles.text}>2° Jogador: {jogador2}</Text>
-      <TextInput
-        placeholder="Nome"
-        style={styles.input}
-        value={jogador2}
-        onChangeText={setJogador2}
-      />
-      <View style={styles.buttonContainer}>
-        <Button title="Jogar" color="#e09f3e" onPress={handleClick} />
-        <Button style={styles.buttonContainer} title="Voltar" color="#8b8c89" onPress={() => changeScreen("Home")} />
-      </View>
+return (
+  <View style={styles.container}>
+    <Text style={styles.text}>1° Jogador: {jogador1}</Text>
+    <TextInput
+      placeholder="Nome"
+      style={styles.input}
+      value={jogador1}
+      onChangeText={setJogador1}
+    />
+    <Text style={styles.text}>2° Jogador: {jogador2}</Text>
+    <TextInput
+      placeholder="Nome"
+      style={styles.input}
+      value={jogador2}
+      onChangeText={setJogador2}
+    />
+    <View style={styles.buttonContainer}>
+      <Button title="Jogar" color="#e09f3e" onPress={handleClick} />
+      <Button style={styles.buttonContainer} title="Voltar" color="#8b8c89" onPress={() => changeScreen("Home")} />
     </View>
-  );
+
+    {error && <Text style={styles.error}>{error}</Text>}
+    
+  </View>
+);
 }
 
 const styles = StyleSheet.create({
@@ -60,7 +71,7 @@ const styles = StyleSheet.create({
     padding: 5
   },
   text: {
-    fontSize: 18 
+    fontSize: 18
   },
   buttonContainer: {
     flexDirection: "row-reverse",
@@ -68,5 +79,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 12,
     gap: 20,
+  },
+  error: {
+    color: "red",
+    fontSize: 14,
+    marginTop: 10,
   }
 });
