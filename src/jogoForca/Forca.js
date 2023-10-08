@@ -135,7 +135,7 @@ export default function Forca(props) {
       {palavraCompleta && alert("🎉 Parabéns! 🎉") }
 
       {!continuaJogo && 
-        alert("Não foi dessa vez! 🤡")
+        alert(`Não foi dessa vez! 🤡 A palavra era ${palavra}`)
       }
     </View>
   );
