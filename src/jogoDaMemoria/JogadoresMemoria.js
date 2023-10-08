@@ -7,19 +7,17 @@ export default function JogadoresMemoria({
 }) {
   const [jogador1, setJogador1] = useState("");
   const [jogador2, setJogador2] = useState("");
-  const [error, setError] = useState("");
 
   const handleClick = () => {
     if (jogadoresMemoria && jogador1.trim() !== "" && jogador2.trim() !== "") {
       if (jogador1 !== jogador2) {
-        setError(""); 
         jogadoresMemoria(jogador1, jogador2);
         changeScreen("JogoMemoria");
       } else {
-        setError("Os nomes dos jogadores devem ser diferentes.");
+        alert("Os nomes dos jogadores devem ser diferentes.");
       }
     } else {
-      setError("Por favor, preencha ambos os nomes dos jogadores.");
+      alert("Por favor, preencha ambos os nomes dos jogadores.");
     }
   };
 
@@ -43,9 +41,6 @@ return (
       <Button title="Jogar" color="#e09f3e" onPress={handleClick} />
       <Button style={styles.buttonContainer} title="Voltar" color="#8b8c89" onPress={() => changeScreen("Home")} />
     </View>
-
-    {error && <Text style={styles.error}>{error}</Text>}
-    
   </View>
 );
 }
@@ -79,10 +74,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 12,
     gap: 20,
-  },
-  error: {
-    color: "red",
-    fontSize: 14,
-    marginTop: 10,
   }
 });

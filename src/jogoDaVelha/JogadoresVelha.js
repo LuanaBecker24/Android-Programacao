@@ -1,25 +1,20 @@
 import { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
-export default function JogadoresVelha ({
-  jogadoresVelha,
-  changeScreen,
-}) {
+export default function JogadoresVelha({ jogadoresVelha, changeScreen }) {
   const [jogador1, setJogador1] = useState("");
   const [jogador2, setJogador2] = useState("");
-  const [error, setError] = useState("");
 
   const handleClick = () => {
     if (jogadoresVelha && jogador1.trim() !== "" && jogador2.trim() !== "") {
       if (jogador1 !== jogador2) {
-        setError(""); 
         jogadoresVelha(jogador1, jogador2);
         changeScreen("JogoVelha");
       } else {
-        setError("Os nomes dos jogadores devem ser diferentes.");
+        alert("Os nomes dos jogadores devem ser diferentes.");
       }
     } else {
-      setError("Por favor, preencha ambos os nomes dos jogadores.");
+      alert("Por favor, preencha ambos os nomes dos jogadores.");
     }
   };
 
@@ -40,12 +35,13 @@ export default function JogadoresVelha ({
         onChangeText={setJogador2}
       />
       <View style={styles.buttonContainer}>
-        <Button title="Voltar" color="#8b8c89" onPress={() => changeScreen("Home")} />
+        <Button
+          title="Voltar"
+          color="#8b8c89"
+          onPress={() => changeScreen("Home")}
+        />
         <Button title="Jogar" color="#e09f3e" onPress={handleClick} />
       </View>
-
-      {error && <Text style={styles.error}>{error}</Text>}
-
     </View>
   );
 }
@@ -58,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     gap: 10,
-    marginTop: 15
+    marginTop: 15,
   },
   input: {
     width: "50%",
@@ -68,21 +64,16 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderWidth: 2,
     fontSize: 12,
-    padding: 5
+    padding: 5,
   },
   text: {
-    fontSize: 18
+    fontSize: 18,
   },
   buttonContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     margin: 12,
-    gap: 15
-  },
-  error: {
-    color: "red",
-    fontSize: 14,
-    marginTop: 10,
+    gap: 15,
   }
 });

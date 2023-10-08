@@ -1,54 +1,143 @@
-import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, Button } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+} from "react-native";
 
 export default function JogoMemoria(props) {
-  const [cards, setCards] = useState([]);
-  const [cardsSelecionados, setCardsSelecionados] = useState([]);
-  const [pares, setPares] = useState([]);
-  const [jogadorAtualIndex, setJogadorAtualIndex] = useState(0);
-  const jogadores = props.jogadoresMemoria || [{ nome: "Jogador 1" }, { nome: "Jogador 2" }];
+  const [cartas, setCartas] = useState([]);
+  const [paresEncontrados, setParesEncontrados] = useState([]);
+  const [viradas, setViradas] = useState([]);
+  const { jogador1, jogador2 } = props;
+  const [jogadorAtual, setJogadorAtual] = useState(jogador1);
+  const [pontuacaoJogador1, setPontuacaoJogador1] = useState(0);
+  const [pontuacaoJogador2, setPontuacaoJogador2] = useState(0);
+  const [jogoTerminou, setJogoTerminou] = useState(false);
+  const [podeVirarCartas, setPodeVirarCartas] = useState(true);
 
   const handleClick = () => {
-    props.changeScreen("JogadoresMemoria")
-  }
+    props.changeScreen("JogadoresMemoria");
+  };
 
-  function embaralharArray(array) {
-    const newArray = [...array];
-    for (let i = newArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-    }
-    return newArray;
-  }
+  const simbolos = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+  ];
 
   useEffect(() => {
-    const allCards = [];
-    for (let i = 1; i <= 25; i++) {
-      allCards.push({ id: i, value: i });
-      allCards.push({ id: i + 25, value: i });
+    const cartasIniciais = [];
+    for (let i = 0; i < 25; i++) {
+      cartasIniciais.push({ id: i, simbolo: simbolos[i], virada: false });
+      cartasIniciais.push({ id: i + 25, simbolo: simbolos[i], virada: false });
     }
-    const embaralharCards = embaralharArray(allCards);
-    setCards(embaralharCards);
-  }, []);
+    embaralhar(cartasIniciais);
+    setCartas(cartasIniciais);
+    setJogadorAtual(jogador1);
+  }, [jogador1, jogador2]);
 
-  const handleCardClick = (card) => {
-    if (cardsSelecionados.length < 2 && !cardsSelecionados.includes(card) && !pares.includes(card)) {
-      setCardsSelecionados([...cardsSelecionados, card]);
+  const handleCardPress = (id) => {
+    if (viradas.length < 2 && podeVirarCartas) {
+      const cartaClicada = cartas.find((carta) => carta.id === id);
+      if (
+        !cartaClicada.virada &&
+        !paresEncontrados.includes(cartaClicada.simbolo)
+      ) {
+        const novasCartas = cartas.map((carta) =>
+          carta.id === id ? { ...carta, virada: true } : carta
+        );
+        setCartas(novasCartas);
+        setViradas([...viradas, cartaClicada]);
+
+        if (viradas.length === 1) {
+          if (viradas[0].simbolo === cartaClicada.simbolo) {
+            // Se as cartas forem iguais, adicione o símbolo aos pares encontrados
+            setParesEncontrados([...paresEncontrados, cartaClicada.simbolo]);
+
+            if (jogadorAtual === jogador1) {
+              setPontuacaoJogador1(pontuacaoJogador1 + 1);
+            } else {
+              setPontuacaoJogador2(pontuacaoJogador2 + 1);
+            }
+          }
+          setTimeout(() => {
+            const cartasVirarDeVolta = cartas.map((carta) =>
+              carta.virada && !paresEncontrados.includes(carta.simbolo)
+                ? { ...carta, virada: false } : carta
+            );
+            setCartas(cartasVirarDeVolta);
+            setJogadorAtual(jogadorAtual === jogador1 ? jogador2 : jogador1);
+            setViradas([]);
+          }, 1000);
+        } else if (viradas.length === 2 && !paresEncontrados.includes(cartaClicada.simbolo)) {
+          setPodeVirarCartas(false); // Impede o jogador de virar outras cartas temporariamente
+          setTimeout(() => {
+            const cartasVirarDeVolta = cartas.map((carta) =>
+              carta.virada && !paresEncontrados.includes(carta.simbolo)
+                ? { ...carta, virada: false } : carta
+            );
+            setCartas(cartasVirarDeVolta);
+            setJogadorAtual(jogadorAtual === jogador1 ? jogador2 : jogador1);
+            setViradas([]);
+            setPodeVirarCartas(true); // Permite que o jogador vire cartas novamente
+          }, 1000);
+        }
+      }
     }
   };
- 
-  useEffect(() => {
-    if (cardsSelecionados.length === 2) {
-      if (cardsSelecionados[0].value === cardsSelecionados[1].value) {
-        setPares([...pares, ...cardsSelecionados]);
-      }
-      setTimeout(() => {
-        setCardsSelecionados([]);
-        // Alternar para o próximo jogador
-        setJogadorAtualIndex((jogadorAtualIndex + 1) % jogadores.length);
-      }, 1000);
+
+  const embaralhar = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
-  }, [cardsSelecionados, pares, jogadorAtualIndex, jogadores]);
+  };
+
+  const renderCard = (carta) => (
+    <TouchableOpacity
+      key={carta.id}
+      style={[
+        styles.card,
+        (carta.virada || paresEncontrados.includes(carta.simbolo)) &&
+          styles.cardVirada,
+      ]}
+      onPress={() => handleCardPress(carta.id)}
+      disabled={
+        paresEncontrados.includes(carta.simbolo) || carta.virada
+      }
+    >
+      {carta.virada || paresEncontrados.includes(carta.simbolo) ? (
+        <Text style={styles.cardText}>{carta.simbolo}</Text>
+      ) : (
+        <Text></Text>
+      )}
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
@@ -57,27 +146,29 @@ export default function JogoMemoria(props) {
       </View>
       <Text style={styles.text}>Jogo da Memória </Text>
 
-      <Text style={styles.jogadorAtual}>Vez de: {jogadores[jogadorAtualIndex].nome}</Text>
+      <Text style={styles.jogador}>Jogador atual: {jogadorAtual}</Text>
+      <Text style={styles.pontuacao}>
+        {jogador1}: {pontuacaoJogador1} {jogador2}: {pontuacaoJogador2}
+      </Text>
 
       <View style={styles.board}>
-        {cards.map((card) => (
-          <TouchableOpacity
-            key={card.id}
-            style={[
-              styles.card,
-              cardsSelecionados.includes(card) && styles.cardsSelecionados,
-              pares.includes(card) && styles.cardsPares,
-            ]}
-            onPress={() => handleCardClick(card)}
-          >
-            {cardsSelecionados.includes(card) || pares.includes(card) ? (
-              <Text style={styles.cardText}>{card.value}</Text>
-            ) : null}
-          </TouchableOpacity>
-        ))}
+        {cartas.map((carta) => renderCard(carta))}
       </View>
+
+      {jogoTerminou && (
+        alert(
+          "Fim do jogo",
+          `Vencedor: ${
+            pontuacaoJogador1 > pontuacaoJogador2
+              ? jogador1
+              : pontuacaoJogador2 > pontuacaoJogador1
+              ? jogador2
+              : "Empate"
+          }`
+        )
+      )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -88,33 +179,36 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     gap: 15,
-    padding: 15
+    padding: 15,
   },
   text: {
     fontSize: 25,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   board: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    maxWidth: 300,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   card: {
-    width: 45,
+    width: 50,
     height: 35,
-    margin: 5,
     backgroundColor: "#e09f3e",
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  cardsSelecionados: {
-    backgroundColor: 'lightcoral',
-  },
-  embaralharCards: {
-    backgroundColor: 'lightgreen',
+  cardVirada: {
+    backgroundColor: "#f2cc8f",
   },
   cardText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-})
+  jogador: {
+    fontSize: 18,
+  },
+  pontuacao: {
+    fontSize: 15,
+  },
+});
