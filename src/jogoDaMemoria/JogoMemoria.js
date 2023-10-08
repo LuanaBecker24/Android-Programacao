@@ -11,12 +11,13 @@ export default function JogoMemoria(props) {
   const [cartas, setCartas] = useState([]);
   const [paresEncontrados, setParesEncontrados] = useState([]);
   const [viradas, setViradas] = useState([]);
-  const { jogador1, jogador2 } = props;
   const [jogadorAtual, setJogadorAtual] = useState(jogador1);
   const [pontuacaoJogador1, setPontuacaoJogador1] = useState(0);
   const [pontuacaoJogador2, setPontuacaoJogador2] = useState(0);
   const [jogoTerminou, setJogoTerminou] = useState(false);
   const [podeVirarCartas, setPodeVirarCartas] = useState(true);
+  
+  const { jogador1, jogador2 } = props;
 
   const handleClick = () => {
     props.changeScreen("JogadoresMemoria");
