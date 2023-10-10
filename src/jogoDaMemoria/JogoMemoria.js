@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  Button,
-} from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View, Button } from "react-native";
 
 export default function JogoMemoria(props) {
   const [cartas, setCartas] = useState([]);
@@ -62,7 +56,7 @@ export default function JogoMemoria(props) {
     setJogadorAtual(jogador1);
   }, [jogador1, jogador2]);
 
-  const handleCardPress = (id) => {
+  const handleCartaVirada = (id) => {
     if (viradas.length < 2 && podeVirarCartas) {
       const cartaClicada = cartas.find((carta) => carta.id === id);
       if (
@@ -127,7 +121,7 @@ export default function JogoMemoria(props) {
         (carta.virada || paresEncontrados.includes(carta.simbolo)) &&
           styles.cardVirada,
       ]}
-      onPress={() => handleCardPress(carta.id)}
+      onPress={() => handleCartaVirada(carta.id)}
       disabled={
         paresEncontrados.includes(carta.simbolo) || carta.virada
       }
@@ -192,8 +186,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   card: {
-    width: 50,
-    height: 35,
+    width: 55,
+    height: 50,
     backgroundColor: "#e09f3e",
     margin: 5,
     justifyContent: "center",
