@@ -2,5 +2,6 @@
 
 Como rodar:
 
-``` - npm i
-    - npm run web
+```
+npm i
+npm run web
